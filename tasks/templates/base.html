@@ -8,16 +8,16 @@
   </head>
     <body class="bg-gray-100">
     <nav class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
-                    <a href="#" class="flex items-center text-xl font-bold text-gray-800">Luzir</a>
+                    <a href="#" class="flex items-center text-xl font-bold text-gray-800 transition duration-300 ease-in-out hover:text-gray-600">Luzir</a>
                 </div>
-                <div class="hidden md:flex items-center">
-                    <a href="{% url 'task_list' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100">List of activities</a>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="{% url 'task_list' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out">List of activities</a>
                 </div>
                 <div class="md:hidden flex items-center">
-                    <button class="mobile-menu-button p-2 rounded-md hover:bg-gray-100">
+                    <button class="mobile-menu-button p-2 rounded-md hover:bg-gray-100 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-200">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -26,19 +26,36 @@
             </div>
         </div>
         <div class="hidden mobile-menu md:hidden">
-            <a href="{% url 'task_list' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">List of activities</a>
+            <a href="{% url 'task_list' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-300 ease-in-out">List of activities</a>
         </div>
     </nav>
-    <main class="max-w-7xl mx-auto px-4 py-6">
-        {% block content %}
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="container mx-auto">
+            {% block content %}
 
-        {% endblock  %}
+            {% endblock  %}
+        </div>
     </main>
     <script>
         const mobileMenuButton = document.querySelector('.mobile-menu-button');
         const mobileMenu = document.querySelector('.mobile-menu');
+        
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
+        });
+
+        // Fecha o menu mobile quando clicar fora dele
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Fecha o menu mobile quando redimensionar a tela
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                mobileMenu.classList.add('hidden');
+            }
         });
     </script>
     </body>

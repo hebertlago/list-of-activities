@@ -2,39 +2,43 @@
 
 {% block content %}
     <div class="bg-white shadow rounded-lg">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h1 class="text-2xl font-bold text-gray-800">List of activities</h1>
+        <div class="px-4 sm:px-6 py-4 border-b border-gray-200">
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-800">List of activities</h1>
         </div>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    {% for task in tasks %}
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{task.pk}}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{task.title}}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{task.get_status_display}}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{task.description}}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{task.created_at}}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{task.due_date}}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <a href="{% url 'task_edit' pk=task.pk %}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                                <a href="{% url 'task_delete' pk=task.pk %}" class="text-red-600 hover:text-red-900">Delete</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="inline-block min-w-full align-middle">
+                <div class="overflow-hidden md:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="hidden sm:table-cell px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
+                                <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="hidden md:table-cell px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                <th scope="col" class="hidden lg:table-cell px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
+                                <th scope="col" class="hidden lg:table-cell px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                                <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for task in tasks %}
+                                <tr>
+                                    <td class="hidden sm:table-cell px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{task.pk}}</td>
+                                    <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{task.title}}</td>
+                                    <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm {% if task.status == 'P' %}text-yellow-500{% elif task.status == 'A' %}text-blue-500{% else %}text-green-500{% endif %}">{{task.get_status_display}}</td>
+                                    <td class="hidden md:table-cell px-3 sm:px-6 py-4 whitespace-normal text-sm text-gray-500 break-words">{{task.description}}</td>
+                                    <td class="hidden lg:table-cell px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{task.created_at}}</td>
+                                    <td class="hidden lg:table-cell px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{task.due_date}}</td>
+                                    <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="{% url 'task_edit' pk=task.pk %}" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</a>
+                                        <a href="{% url 'task_delete' pk=task.pk %}" class="text-red-600 hover:text-red-900">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock content %}
