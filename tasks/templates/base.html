@@ -10,17 +10,34 @@
     <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
+                {% if request.user.is_authenticated %}
                 <div class="flex">
                     <a href="#" class="flex items-center text-xl font-bold text-gray-800 transition duration-300 ease-in-out hover:text-gray-600">Luzir</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-4">
+                    <span class="px-3 py-2 text-sm font-medium text-gray-700">Welcome, {{ request.user.username }}</span>
                     <a href="{% url 'task_list' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out">List of activities</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-4">
                     <a href="{% url 'task_create' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out">Create Activity</a>
                 </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <!-- Formulário de Logout com método POST -->
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out">Logout</button>
+                    </form>
+                </div>
+                {% else %}
+                <div class="flex">
+                    <a href="#" class="flex items-center text-xl font-bold text-gray-800 transition duration-300 ease-in-out hover:text-gray-600">Luzir</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="{% url 'login' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition duration-300 ease-in-out">Login</a>
+                </div>
+                {% endif %}
                 <div class="md:hidden flex items-center">
-                    <button class="mobile-menu-button p-2 rounded-md hover:bg-gray-100 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-200">
+                    <button class="mobile-menu-button p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-200">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -29,7 +46,18 @@
             </div>
         </div>
         <div class="hidden mobile-menu md:hidden">
+            {% if request.user.is_authenticated %}
+            <span class="block px-4 py-2 text-sm text-gray-700">Welcome, {{ request.user.username }}</span>
             <a href="{% url 'task_list' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-300 ease-in-out">List of activities</a>
+            <a href="{% url 'task_create' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-300 ease-in-out">Create Activity</a>
+            <!-- Formulário de Logout para mobile -->
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-300 ease-in-out">Logout</button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition duration-300 ease-in-out">Login</a>
+            {% endif %}
         </div>
     </nav>
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
