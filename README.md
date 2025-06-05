@@ -22,7 +22,7 @@ Este é um projeto **Django** que permite aos usuários gerenciar suas atividade
 
 ### 1. Clonar o Repositório
 
-Primeiro, clone este repositório para o seu computador:
+Primeiro, clone este repositório para o computador:
 
 
 git clone https://github.com/hebertlago/lista-de-atividades.git
